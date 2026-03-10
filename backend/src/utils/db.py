@@ -4,7 +4,10 @@ from .settings import settings
 
 Base = declarative_base()
 
-engine = create_engine(url=settings.DB_CONNECTION)
+engine = create_engine(
+    url=settings.DB_CONNECTION,
+    connect_args={"sslmode": "require"}
+)
 
 LocalSession = sessionmaker(bind=engine)
 
