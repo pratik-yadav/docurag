@@ -5,7 +5,7 @@ from src.chats.router import chat_routes
 from src.suggestions.router import suggestion_routes
 from fastapi.middleware.cors import CORSMiddleware
 
-Base.metadata.create_all(engine)
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 app.add_middleware(
