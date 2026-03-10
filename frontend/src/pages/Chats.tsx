@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useAuthStore } from '../store/authstore'
+import { useAuthStore } from '../store/authStore'
 
 interface Message {
   id: string

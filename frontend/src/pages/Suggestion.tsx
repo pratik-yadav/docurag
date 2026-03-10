@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
-import { useAuthStore } from '../store/authstore'
+import { useAuthStore } from '../store/authStore'
 
 interface Question {
   id?: number

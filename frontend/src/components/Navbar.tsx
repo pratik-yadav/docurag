@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuthStore } from '../store/authstore'
+import { useAuthStore } from '../store/authStore'
 
 export default function Navbar() {
   const navigate = useNavigate()

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuthStore } from '../store/authstore'
+import { useAuthStore } from '../store/authStore'
 
 const BASE_URL = `${import.meta.env.VITE_API_URL}/api/user`
 

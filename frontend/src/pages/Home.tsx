@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
-import { useAuthStore } from '../store/authstore'
+import { useAuthStore } from '../store/authStore'
 
 export default function Home() {
   const navigate = useNavigate()
