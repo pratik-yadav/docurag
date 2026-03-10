@@ -1,27 +1,34 @@
+import os
+import tempfile
+import shutil
+
+os.environ["HF_HOME"] = "/tmp/huggingface"
+os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader, TextLoader
-import tempfile
-import os
 
-CHROMA_DIR = "./chroma_store"
+CHROMA_DIR = "/tmp/chroma_store"
 
-embeddings_model = HuggingFaceEmbeddings(
-    model_name="all-MiniLM-L6-v2"
-)
+_embeddings_model = None
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 
-text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1000,
-    chunk_overlap=200
-)
+
+def get_embeddings() -> HuggingFaceEmbeddings:
+    global _embeddings_model
+    if _embeddings_model is None:
+        _embeddings_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+    return _embeddings_model
 
 
 def get_vector_store(collection_name: str) -> Chroma:
     return Chroma(
         collection_name=collection_name,
-        embedding_function=embeddings_model,
+        embedding_function=get_embeddings(),
         persist_directory=os.path.join(CHROMA_DIR, collection_name)
     )
 
@@ -46,7 +53,6 @@ def load_and_split_file(file_bytes: bytes, filename: str, content_type: str) -> 
             loader = Docx2txtLoader(tmp_path)
         else:
             loader = TextLoader(tmp_path)
-
         docs = loader.load()
     finally:
         os.unlink(tmp_path)
@@ -65,7 +71,6 @@ def embed_and_store(file_bytes: bytes, filename: str, content_type: str, collect
 
 
 def delete_collection(collection_name: str) -> None:
-    import shutil
     path = os.path.join(CHROMA_DIR, collection_name)
     if os.path.exists(path):
         shutil.rmtree(path)
