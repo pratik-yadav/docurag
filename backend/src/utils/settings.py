@@ -8,6 +8,5 @@ class Settings(BaseSettings):
     ALGORITHM:str
     ACCESS_TOKEN_EXPIRE_MINUTES:int
     GROQ_API_KEY:str
-    OPENAI_API_KEY:str
 
 settings = Settings()
