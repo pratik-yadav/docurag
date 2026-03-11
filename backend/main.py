@@ -19,6 +19,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+def root():
+    return {"status": "ok"}
 app.include_router(user_routes)
 app.include_router(chat_routes)
 app.include_router(suggestion_routes)
