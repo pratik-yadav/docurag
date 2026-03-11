@@ -76,7 +76,7 @@ function ChatHistory() {
         <div className="flex items-center justify-between mb-10">
           <div className="flex items-center gap-4">
             <button
-              onClick={() => navigate(-1)}
+              onClick={() => navigate('/')}
               className="text-gray-500 hover:text-white text-sm transition"
             >
               ← Back

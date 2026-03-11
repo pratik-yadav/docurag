@@ -77,4 +77,4 @@ def delete_collection(collection_name: str) -> None:
 
 
 def get_collection_name(room_id: int | str) -> str:
-    return f"chat_room_{room_id}"
+    return f"chat_room_{room_id}" 

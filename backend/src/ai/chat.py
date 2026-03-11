@@ -3,11 +3,16 @@ from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 from src.ai.embeddings import get_vector_store
 from src.utils.settings import settings
 
-llm = ChatGroq(
-    # model="llama-3.3-70b-versatile",
-    model="llama-3.1-8b-instant",
-    api_key=settings.GROQ_API_KEY
-)
+_llm = None
+
+def get_llm():
+    global _llm
+    if _llm is None:
+        _llm = ChatGroq(
+            model="llama-3.1-8b-instant",
+            api_key=settings.GROQ_API_KEY
+        )
+    return _llm
 
 
 def build_chat_history(history: list) -> list:
@@ -44,5 +49,6 @@ def ask_document(question: str, collection_name: str, history: list) -> str:
         HumanMessage(content=question),
     ]
 
-    response = llm.invoke(messages)
+    # response = llm.invoke(messages)
+    response = get_llm().invoke(messages)
     return response.content

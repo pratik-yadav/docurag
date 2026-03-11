@@ -5,11 +5,16 @@ from src.ai.embeddings import load_and_split_file
 from src.utils.settings import settings
 import json
 
-llm = ChatGroq(
-    # model="llama-3.3-70b-versatile",
-    model="llama-3.1-8b-instant",
-    api_key=settings.GROQ_API_KEY
-)
+_llm = None
+
+def get_llm():
+    global _llm
+    if _llm is None:
+        _llm = ChatGroq(
+            model="llama-3.1-8b-instant",
+            api_key=settings.GROQ_API_KEY
+        )
+    return _llm
 
 SUGGESTION_PROMPT = PromptTemplate(
     input_variables=["resume"],
@@ -54,7 +59,7 @@ def extract_resume_text(file_bytes: bytes, filename: str, content_type: str) -> 
 
 
 def get_suggestions(resume_text: str) -> list[str]:
-    chain = SUGGESTION_PROMPT | llm | StrOutputParser()
+    chain = SUGGESTION_PROMPT | get_llm() | StrOutputParser()
     raw = chain.invoke({"resume": resume_text})
     try:
         cleaned = raw.strip().removeprefix("```json").removesuffix("```").strip()
@@ -65,7 +70,7 @@ def get_suggestions(resume_text: str) -> list[str]:
 
 
 def get_interview_questions(resume_text: str) -> list[dict]:
-    chain = QUESTIONS_PROMPT | llm | StrOutputParser()
+    chain = QUESTIONS_PROMPT | get_llm() | StrOutputParser()
     raw = chain.invoke({"resume": resume_text})
     try:
         cleaned = raw.strip().removeprefix("```json").removesuffix("```").strip()
