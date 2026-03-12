@@ -131,7 +131,10 @@ function Chats() {
       {/* Header */}
       <div className="flex-shrink-0 bg-gray-900 border-b border-gray-800 px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4 min-w-0">
-          <button onClick={() => navigate('//history/chats')} className="text-gray-500 hover:text-white transition text-sm flex-shrink-0">
+          <button
+            onClick={() => isLoggedIn ? navigate('/history/chats') : navigate(-1)}
+            className="text-gray-500 hover:text-white transition text-sm flex-shrink-0"
+          >
             ← Back
           </button>
           <div className="min-w-0">

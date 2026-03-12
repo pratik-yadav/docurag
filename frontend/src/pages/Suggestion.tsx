@@ -107,7 +107,10 @@ function SuggestionPage() {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4 min-w-0">
-            <button onClick={() => navigate('/history/suggestions')} className="text-gray-500 hover:text-white text-sm transition flex-shrink-0">
+            <button
+              onClick={() => isLoggedIn ? navigate('/history/suggestions') : navigate(-1)}
+              className="text-gray-500 hover:text-white text-sm transition flex-shrink-0"
+            >
               ← Back
             </button>
             <div className="min-w-0">

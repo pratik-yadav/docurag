@@ -1,10 +1,20 @@
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import { useAuthStore } from '../store/authStore'
+import { useEffect } from 'react'
+
+const BASE_URL = `${import.meta.env.VITE_API_URL}/`
 
 export default function Home() {
   const navigate = useNavigate()
   const { isLoggedIn, user } = useAuthStore()
+
+  useEffect(() => {
+    fetch(`${BASE_URL}`)
+      .then((res) => res.json())
+      .then((data) => console.log('Server warmed up:', data))
+      .catch((err) => console.warn('Warm-up ping failed (server may still be starting):', err))
+  }, [])
 
   return (
     <>
