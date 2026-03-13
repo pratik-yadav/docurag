@@ -39,7 +39,7 @@ export default function Home() {
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
               Powered by RAG + Groq LLM
             </div>
-
+      
             {isLoggedIn ? (
               <h1 className="text-5xl md:text-6xl font-bold mb-4 leading-tight tracking-tight">
                 Welcome back,{' '}

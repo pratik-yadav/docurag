@@ -127,6 +127,7 @@ function Feature() {
         <div className="text-center mb-10">
           <h1 className="text-3xl font-bold tracking-tight">What would you like to do?</h1>
           <p className="text-gray-500 text-sm mt-2">Choose one to get started</p>
+          <p className="text-gray-500 text-sm mt-2">⚠️ The first request may take 45–60 seconds if the backend has been inactive, as the server needs time to restart</p>
         </div>
 
         {/* Error */}
