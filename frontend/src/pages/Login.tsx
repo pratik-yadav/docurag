@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
+import { fetchWithTimeout } from '../utils/api'
 
 const BASE_URL = `${import.meta.env.VITE_API_URL}/api/user`
 
@@ -18,11 +19,11 @@ function Login() {
     setError(null)
     setLoading(true)
     try {
-      const res = await fetch(`${BASE_URL}/login`, {
+      const res = await fetchWithTimeout(`${BASE_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
-      })
+      }, 30000)
       const data = await res.json()
       if (!res.ok) throw new Error(data.detail || 'Login failed')
 

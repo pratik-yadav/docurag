@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
+import { fetchWithTimeout } from '../utils/api'
 
 interface Message {
   id: string
@@ -51,9 +52,9 @@ function Chats() {
     if (!isLoggedIn || !id) { setInitialLoading(false); return }
     const fetchRoom = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/rooms/${id}`, {
+        const res = await fetchWithTimeout(`${BASE_URL}/rooms/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
-        })
+        }, 30000)
         if (!res.ok) throw new Error('Failed to load chat history')
         const data = await res.json()
         setRoomTitle(data.room.title || `Chat #${id}`)
@@ -99,9 +100,10 @@ function Chats() {
       const headers: Record<string, string> = { 'Content-Type': 'application/json' }
       if (token) headers['Authorization'] = `Bearer ${token}`
 
-      const res = await fetch(
+      const res = await fetchWithTimeout(
         `${BASE_URL}/ask/${roomId}?question=${encodeURIComponent(question)}`,
-        { method: 'POST', headers }
+        { method: 'POST', headers },
+        90000
       )
 
       if (!res.ok) {

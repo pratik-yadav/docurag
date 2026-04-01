@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
+import { fetchWithTimeout } from '../utils/api'
 
 const SUGGESTION_URL = `${import.meta.env.VITE_API_URL}/api/suggestion`
 const CHAT_URL = `${import.meta.env.VITE_API_URL}/api/chat`
@@ -44,7 +45,7 @@ function Feature() {
       const headers: Record<string, string> = {}
       if (token) headers['Authorization'] = `Bearer ${token}`
 
-      const res = await fetch(`${SUGGESTION_URL}/analyze`, { method: 'POST', headers, body: formData })
+      const res = await fetchWithTimeout(`${SUGGESTION_URL}/analyze`, { method: 'POST', headers, body: formData }, 90000)
       if (!res.ok) { const d = await res.json(); throw new Error(d.detail || 'Failed to analyze resume') }
       const data = await res.json()
 
@@ -71,7 +72,7 @@ function Feature() {
       const headers: Record<string, string> = {}
       if (token) headers['Authorization'] = `Bearer ${token}`
 
-      const res = await fetch(`${CHAT_URL}/upload`, { method: 'POST', headers, body: formData })
+      const res = await fetchWithTimeout(`${CHAT_URL}/upload`, { method: 'POST', headers, body: formData }, 90000)
       if (!res.ok) { const d = await res.json(); throw new Error(d.detail || 'Failed to upload document') }
       const data = await res.json()
 

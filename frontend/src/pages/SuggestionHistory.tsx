@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
+import { fetchWithTimeout } from '../utils/api'
 
 interface SuggestionRoom {
   id: number
@@ -26,9 +27,9 @@ function SuggestionHistory() {
     setLoading(true)
     setError(null)
     try {
-      const res = await fetch(`${BASE_URL}/rooms`, {
+      const res = await fetchWithTimeout(`${BASE_URL}/rooms`, {
         headers: { Authorization: `Bearer ${token}` },
-      })
+      }, 30000)
       if (!res.ok) throw new Error('Failed to load suggestion history')
       const data = await res.json()
       setRooms(data)
@@ -43,10 +44,10 @@ function SuggestionHistory() {
     e.stopPropagation()
     setDeletingId(id)
     try {
-      const res = await fetch(`${BASE_URL}/rooms/${id}`, {
+      const res = await fetchWithTimeout(`${BASE_URL}/rooms/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
-      })
+      }, 30000)
       if (!res.ok) throw new Error('Failed to delete')
       setRooms((prev) => prev.filter((r) => r.id !== id))
     } catch (err: any) {

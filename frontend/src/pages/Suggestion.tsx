@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
+import { fetchWithTimeout } from '../utils/api'
 
 interface Question {
   id?: number
@@ -45,9 +46,9 @@ function SuggestionPage() {
     const fetchRoom = async () => {
       setLoading(true)
       try {
-        const res = await fetch(`${BASE_URL}/rooms/${id}`, {
+        const res = await fetchWithTimeout(`${BASE_URL}/rooms/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
-        })
+        }, 30000)
         if (!res.ok) throw new Error('Failed to load suggestion room')
         const data = await res.json()
         setRoomTitle(data.room.title || 'Resume Analysis')
@@ -65,10 +66,10 @@ function SuggestionPage() {
   const handleDelete = async () => {
     if (!isLoggedIn || !id || id === 'guest') { navigate('/features'); return }
     try {
-      const res = await fetch(`${BASE_URL}/rooms/${id}`, {
+      const res = await fetchWithTimeout(`${BASE_URL}/rooms/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
-      })
+      }, 30000)
       if (!res.ok) throw new Error('Failed to delete room')
       navigate('/history/suggestions')
     } catch (err: any) {
