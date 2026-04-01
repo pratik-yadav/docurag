@@ -42,7 +42,7 @@ def upload_document(file: UploadFile, current_user: UserModel | None, db: Sessio
             "message": "Document uploaded and embedded. You can now ask questions."
         }
 
-    # Guest — use a UUID as both session_id and collection_name
+    # Guest
     session_id = str(uuid.uuid4())
     collection_name = get_collection_name(session_id)
     chunk_count = embed_and_store(file_bytes, file.filename, file.content_type, collection_name)

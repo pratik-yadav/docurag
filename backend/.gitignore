@@ -37,3 +37,5 @@ dist/
 index.py
 
 chroma_store/
+
+CLAUDE.md

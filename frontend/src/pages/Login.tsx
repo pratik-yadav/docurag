@@ -26,7 +26,6 @@ function Login() {
       const data = await res.json()
       if (!res.ok) throw new Error(data.detail || 'Login failed')
 
-      // ✅ Store in Zustand (persisted to localStorage automatically)
       login(data.user, data.token)
       navigate('/')
     } catch (err: any) {
