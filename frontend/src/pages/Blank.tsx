@@ -1,4 +1,4 @@
-import Navbar from '../components/Navbar'
+
 
 export default function Blank() {
   return (
@@ -7,3 +7,4 @@ export default function Blank() {
     </div>
   )
 }
+
