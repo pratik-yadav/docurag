@@ -34,12 +34,15 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-14">
 
           {/* Logo */}
-          <div
-            className="cursor-pointer flex items-center gap-2"
-            onClick={() => navigate('/')}
-          >
-            <span className="text-indigo-400 text-lg">⬡</span>
-            <span className="text-white font-bold tracking-tight">DocuRAG</span>
+          <div className="flex items-center gap-2">
+            <span
+              className="text-indigo-400 text-lg cursor-pointer hover:text-indigo-300 transition"
+              onClick={() => navigate('/blank')}
+            >⬡</span>
+            <span
+              className="text-white font-bold tracking-tight cursor-pointer hover:text-gray-300 transition"
+              onClick={() => navigate('/')}
+            >DocuRAG</span>
           </div>
 
           {/* Right */}

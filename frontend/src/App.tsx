@@ -7,6 +7,7 @@ import Chats from "./pages/Chats"
 import SuggestionHistory from "./pages/SuggestionHistory"
 import Suggestion from "./pages/Suggestion"
 import Register from "./pages/Register"
+import Blank from "./pages/Blank"
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />}/>
+        <Route path="/blank" element={<Blank />}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/register" element={<Register />}/>
         <Route path="/features" element={<Feature />}/>
